@@ -319,6 +319,7 @@ def main():
                 inputs[k] = v.cuda()
 
             with torch.no_grad():
+                # get lm_logits
                 outputs = model(
                     input_ids=inputs['input_ids'],
                     attention_mask=inputs['attention_mask'],
@@ -326,7 +327,7 @@ def main():
                     # lm_labels=inputs['lm_labels'],
                     decoder_attention_mask=inputs['decoder_attention_mask'],
                     use_cache=False,
-                ).cpu().numpy()
+                )[0].cpu().numpy()
                 ids = []
                 for output in outputs:
                     arr = []
